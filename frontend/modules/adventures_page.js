@@ -79,14 +79,31 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
+  // 1. Filter the list based on the duration range
+    const filteredList = list.filter((adventure) => 
+      adventure.duration >= low && adventure.duration <= high
+    );
 
+    // 2. Return the filtered array
+    return filteredList;
 }
 
 //Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
 function filterByCategory(list, categoryList) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
+  // 1. If the user hasn't picked any categories, return the whole list
+  if (!categoryList || categoryList.length === 0) {
+    return list;
+  }
 
+  // 2. Use the .filter() method to create a new array
+  // We check if the 'category' of the adventure is present in our 'categoryList' array
+  const filteredList = list.filter((adventure) => 
+    categoryList.includes(adventure.category)
+  );
+
+  return filteredList;
 }
 
 // filters object looks like this filters = { duration: "", category: [] };
@@ -98,30 +115,48 @@ function filterByCategory(list, categoryList) {
 
 function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
-  // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
-  // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
+  let filteredList = list;
 
+  // 1. Handle Category Filter (if any are selected)
+  if (filters.category && filters.category.length > 0) {
+    filteredList = filterByCategory(filteredList, filters.category);
+  }
 
-  // Place holder for functionality to work in the Stubs
-  return list;
+  // 2. Handle Duration Filter (if a range is selected)
+  if (filters.duration && filters.duration !== "") {
+    // Split the string "2-6" into an array ["2", "6"]
+    const [low, high] = filters.duration.split("-");
+    
+    // Pass the list through the duration filter using the split numbers
+    filteredList = filterByDuration(
+      filteredList, 
+      parseInt(low), 
+      parseInt(high)
+    );
+  }
+
+  // 3. Return the final list that satisfies all active filters
+  return filteredList;
 }
 
 //Implementation of localStorage API to save filters to local storage. This should get called everytime an onChange() happens in either of filter dropdowns
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
+  // Save the filters object as a string in the browser's memory
+  // 1. Pack the object into a string and save it
+      localStorage.setItem("filters", JSON.stringify(filters));
+      return true;
+    }
 
-  return true;
-}
+
 
 //Implementation of localStorage API to get filters from local storage. This should get called whenever the DOM is loaded.
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
-
-
-  // Place holder for functionality to work in the Stubs
-  return null;
+  // Retrieve the string and turn it back into an object
+  return JSON.parse(localStorage.getItem("filters"));
 }
 
 //Implementation of DOM manipulation to add the following filters to DOM :
@@ -131,7 +166,32 @@ function getFiltersFromLocalStorage() {
 function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
+  // 1. Find the parent element where pills should go
 
+  // --- NEW: Update the Duration Dropdown value ---
+  if (filters.duration) {
+    document.getElementById("duration-select").value = filters.duration;
+  }
+
+  const parent = document.getElementById("category-list");
+  
+  // 2. Clear out any old pills before adding new ones
+  parent.innerHTML = "";
+
+  // 3. Iterate through each category selected in the filters object
+  filters.category.forEach((categoryName) => {
+    // 4. Create a new div for the pill
+    const pill = document.createElement("div");
+    
+    // 5. Add the required CSS class for styling
+    pill.className = "category-filter";
+    
+    // 6. Set the text to the name of the category
+    pill.innerText = categoryName;
+
+    // 7. Add the pill to the DOM
+    parent.appendChild(pill);
+  });
 }
 export {
   getCityFromURL,
