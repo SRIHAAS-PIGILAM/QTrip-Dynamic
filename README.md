@@ -1,3 +1,4 @@
+
 # QTrip Dynamic 🌍✈️
 
 QTrip is a high-performance travel and adventure booking platform designed for travelers seeking diverse experiences across various cities. This project transitions from a static layout to a fully dynamic web application powered by REST APIs and persistent client-side logic.
@@ -45,3 +46,35 @@ Built a reservation form that communicates with the server via the `Fetch API`. 
 1. **Clone the Repo:**
    ```bash
    git clone [https://github.com/SRIHAAS-PIGILAM/QTrip-Dynamic.git](https://github.com/SRIHAAS-PIGILAM/QTrip-Dynamic.git)
+   
+2. **Installation:**
+   The project uses external API endpoints. No local database setup is required. 
+3. **Launch:**
+   Open `index.html` using a Live Server (VS Code) to view the application locally.
+
+---
+
+## 🤝 Acknowledgments
+
+A special thanks to the **Crio.do** team for providing the architectural guidance and technical sprints that made this project a success.
+
+---
+
+## 👤 Author
+
+**Pigilam Srihaas** *Full Stack Developer | B.Tech ECE Graduate (2024)* - [LinkedIn](https://www.linkedin.com/in/srihaas-pigilam/)  
+- [GitHub](https://github.com/SRIHAAS-PIGILAM)
+```
+
+---
+
+### 🛠️ Quick Steps to Update:
+1. Open your `QTrip-Dynamic` folder on your laptop.
+2. Create/Update the `README.md` file with the code above.
+3. Commit and Push:
+   ```bash
+   git add README.md
+   git commit -m "docs: complete technical documentation for QTrip Dynamic"
+   git push origin main
+   ```
+
